@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatBot</title>
+</head>
+<body>
+    <input id="msg" placeholder="type message"/>
+    <button type="button" onClick="send()">Send</button>
+    <p id="reply"></p>
+    <script> 
+        async function send() {
+            const msg = document.getElementById("msg").value;
+            const res = await fetch("http://localhost:5000/chat", {
+                method: "POST",
+                headers: {"Content-Type":"application/json"},
+                body: JSON.stringify({message: msg})
+            });
+            const data = await res.json();
+            document.getElementById("reply").innerText = data.reply;
+        }
+    </script>
+</body>
+</html>
